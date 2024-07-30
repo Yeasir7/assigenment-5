@@ -9,6 +9,6 @@
 }
 
 .bg-image{
-    background-image: url('/images/banner.png');
+    background-image: url('../images/banner.png');
     background-size: cover;
 }
