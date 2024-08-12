@@ -12,3 +12,7 @@
     background-image: url('../images/banner.png');
     background-size: cover;
 }
+.created-seat{
+    display: flex;
+    justify-content: space-between;
+}
