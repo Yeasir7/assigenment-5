@@ -5,6 +5,7 @@ document.getElementById('buy-ticket-btn').addEventListener('click', function(){
 const allSeats = document.getElementsByClassName('all-seat');
 let totalSelectedSit = 0;
 let seatLeft = 40;
+let totalCost = 0;
 
 for(const seat of allSeats) {
     seat.addEventListener('click', function (event) {
@@ -15,8 +16,9 @@ for(const seat of allSeats) {
         if (seat.style.backgroundColor === 'rgb(29, 209, 0)') {
             seat.style.backgroundColor = '';
             seat.style.color = '';
-            totalSelectedSit--;
+            totalSelectedSit--; 
             seatLeft++;
+            totalCost -= price;
 
             const selectedTicket = document.getElementById('selected-ticket');
             const removeDiv = Array.from(selectedTicket.children).find(div => 
@@ -26,32 +28,38 @@ for(const seat of allSeats) {
                 selectedTicket.removeChild(removeDiv);
             }
         } else {
-            seat.style.backgroundColor = '#1DD100';
-            seat.style.color = 'white';
-            totalSelectedSit++;
-            seatLeft--;
+            if (totalSelectedSit < 4) {
+                seat.style.backgroundColor = '#1DD100';
+                seat.style.color = 'white';
+                totalSelectedSit++;
+                seatLeft--;
+                totalCost += price;
 
-            const selectedTicket = document.getElementById('selected-ticket');
+                const selectedTicket = document.getElementById('selected-ticket');
 
-            const div = document.createElement('div');
-          div.classList.add("created-seat")
+                const div = document.createElement('div');
+                div.classList.add("created-seat")
 
-           const p1 = document.createElement('p');
-           const p2 = document.createElement('p');
-           const p3 = document.createElement('p');
-           p1.innerText = selectedSeat;
-           p2.innerText = classSeat;
-           p3.innerText = price;
+                const p1 = document.createElement('p');
+                const p2 = document.createElement('p');
+                const p3 = document.createElement('p');
+                p1.innerText = selectedSeat;
+                p2.innerText = classSeat;
+                p3.innerText = price;
 
-           div.appendChild(p1);
-           div.appendChild(p2);
-           div.appendChild(p3);
+                div.appendChild(p1);
+                div.appendChild(p2);
+                div.appendChild(p3);
 
-           selectedTicket.appendChild(div);
+                selectedTicket.appendChild(div);
+            } else {
+                alert("You can't select more than 4 seats.");
+                return;
+            }
         }
 
-           document.getElementById('total-selected-sit').textContent = totalSelectedSit;
-           document.getElementById('seat-left').textContent = seatLeft;
-
+        document.getElementById('total-selected-sit').textContent = totalSelectedSit;
+        document.getElementById('seat-left').textContent = seatLeft;
+        document.querySelector('.total-cost').innerText = totalCost;
     });
 }
